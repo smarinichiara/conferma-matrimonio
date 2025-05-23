@@ -74,21 +74,21 @@
       <label><input type="radio" name="presenza" value="assente"> Non potrò partecipare</label>
     </div>
 
-    <button onclick="inviaConferma()">Invia</button>
+    <button id="invia">Invia</button>
     <div class="messaggio" id="messaggioRisposta"></div>
   </div>
 
   <script>
-    async function inviaConferma() {
-      const nome = document.getElementById('nome').value.trim();
-      const cognome = document.getElementById('cognome').value.trim();
-      const presenza = document.querySelector('input[name="presenza"]:checked');
+    document.getElementById("invia").addEventListener("click", async function () {
+      const nome = document.getElementById("nome").value.trim();
+      const cognome = document.getElementById("cognome").value.trim();
+      const presenza = document.querySelector("input[name='presenza']:checked");
 
-      const messaggioBox = document.getElementById('messaggioRisposta');
-      messaggioBox.innerText = '';
+      const messaggioBox = document.getElementById("messaggioRisposta");
+      messaggioBox.innerText = "";
 
       if (!nome || !cognome || !presenza) {
-        messaggioBox.innerText = 'Per favore compila tutti i campi.';
+        messaggioBox.innerText = "Per favore compila tutti i campi.";
         return;
       }
 
@@ -110,7 +110,7 @@
       } catch (e) {
         messaggioBox.innerText = "Si è verificato un errore tecnico. Contatta gli sposi.";
       }
-    }
+    });
   </script>
 </body>
 </html>
