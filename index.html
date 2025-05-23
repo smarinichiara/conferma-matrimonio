@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Conferma Presenza Matrimonio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;700&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Cormorant SC', serif;
+      background-color: white;
+      color: #9a700d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 90%;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"], button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 18px;
+      font-family: 'Cormorant SC', serif;
+      border: 1px solid #9a700d;
+      border-radius: 8px;
+      background: white;
+      color: #9a700d;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    button {
+      background-color: #9a700d;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #7b570a;
+    }
+
+    .messaggio {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Conferma la tua presenza</h2>
+    <input type="text" id="nome" placeholder="Nome">
+    <input type="text" id="cognome" placeholder="Cognome">
+
+    <div>
+      <label><input type="radio" name="presenza" value="presente"> Conferma la presenza</label><br>
+      <label><input type="radio" name="presenza" value="assente"> Non potrò partecipare</label>
+    </div>
+
+    <button onclick="inviaConferma()">Invia</button>
+    <div class="messaggio" id="messaggioRisposta"></div>
+  </div>
+
+  <script>
+    async function inviaConferma() {
+      const nome = document.getElementById('nome').value.trim();
+      const cognome = document.getElementById('cognome').value.trim();
+      const presenza = document.querySelector('input[name="presenza"]:checked');
+
+      const messaggioBox = document.getElementById('messaggioRisposta');
+      messaggioBox.innerText = '';
+
+      if (!nome || !cognome || !presenza) {
+        messaggioBox.innerText = 'Per favore compila tutti i campi.';
+        return;
+      }
+
+      const dati = {
+        nome: nome,
+        cognome: cognome,
+        partecipazione: presenza.value
+      };
+
+      try {
+        const risposta = await fetch(https://script.google.com/macros/s/AKfycbzZx7J5jPX3HDrIsyQsARejYGi-ZSPp4A7nCn5bFF1jYFqyQyLljHoC47Y5zXeHEzM5bQ/exec, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dati)
+        });
+
+        const json = await risposta.json();
+        messaggioBox.innerText = json.messaggio || "Risposta ricevuta.";
+      } catch (e) {
+        messaggioBox.innerText = "Si è verificato un errore tecnico. Contatta gli sposi.";
+      }
+    }
+  </script>
+</body>
+</html>
